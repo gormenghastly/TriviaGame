@@ -1,0 +1,85 @@
+body {
+    background: url(../images/matrix2.jpg);
+    font-family: 'Courier New', Courier, monospace;
+}
+#title {
+    height: 125px;
+    background: black;
+    border: 5px solid white;
+    color: green;
+    font-size: 84px;
+    text-shadow: 0 0 6px white;
+}
+#clock {
+    background: black;
+    border: 5px solid white;
+    color: green;
+    font-size: 84px;
+    text-shadow: 0 0 6px white;
+}
+#question-card {
+    border: 5px solid green;
+}
+#question {
+    color: black;
+    font-size: 30px;
+    font-weight: bold;
+}
+#start-card {
+    background: red;
+    border: 1px solid red;
+    border-radius: 35px;
+    margin-top: 150px;
+}
+#start {
+    background: red;
+    border-radius: 35px;
+    font-size: 36px;
+    font-weight: bold;
+}
+#answer-card {
+    background: green;
+    border: 5px solid green;
+}
+#btn-one {
+    font-size: 20px;
+    font-weight: bold;
+}
+#btn-two {
+    font-size: 20px;
+    font-weight: bold;
+}
+#btn-three {
+    font-size: 20px;
+    font-weight: bold;
+}
+#btn-four {
+    font-size: 20px;
+    font-weight: bold;
+}
+#correct-card{
+    height: 150px;
+    background: green;
+    border: 5px solid green;
+}
+#correct {
+    color: white;
+    font-size: 36px;
+    font-weight: bold;
+}
+#correct-answer {
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+#total-card{
+    height: 200px;
+    background: green;
+    border: 5px solid green;
+}
+h4 {
+    color: white;
+    font-size: 36px;
+    font-weight: bold;
+}

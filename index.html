@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Trivia Game</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/custom.css"/>
+</head>
+<body>
+
+    <div class="container">
+        <br>
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-10">
+                <div class="card text-center">
+                    <h1 id="title">THE MATRIX TRIVIA</h1>
+                </div>
+            </div>        
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4">
+                <div class="card text-center" id="clock-card">
+                    <h2 id="clock">00:00</h2>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-10">
+                <div class="card text-center" id="question-card">
+                    <h4 id="question">QUESTION,<br>MORE</h4>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4">
+                <div class="card text-center" id="start-card">
+                <button type="button" class="btn btn-danger btn-lg" id="start">START HERE...</button>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-10">
+                <div class="card text-center" id="answer-card">
+                        <button type="button" class="btn btn-success" class="btn-answer" id="btn-one">1. ANSWER</button>
+                        <button type="button" class="btn btn-success" class="btn-answer" id="btn-two">2. ANSWER</button>
+                        <button type="button" class="btn btn-success" class="btn-answer" id="btn-three">3. ANSWER</button>
+                        <button type="button" class="btn btn-success" class="btn-answer" id="btn-four">4. ANSWER</button>
+                                
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-10">
+                <div class="card text-center" id="correct-card">
+                    <h4 id="correct">CORRECT</h4>
+                    <br>
+                    <h4 id="correct-answer"></h4>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-10">
+                <div class="card text-center" id="total-card">
+                    <h4 id="correct-total"></h4>
+                    <h4 id="incorrect-total"></h4>
+                    <h4 id="time-out"></h4>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+    </div>
+
+    <script src="assets/javascript/game.js"></script> 
+</body>
+</html>
