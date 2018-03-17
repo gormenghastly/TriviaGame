@@ -46,80 +46,92 @@ var incorrect = 0;
 var timeOut = 0;
 var questionCount = 0;
 var currentQuestion = questionArray[questionCount];
-
-
-
+       
 $(document).ready(function() {
-
-
+    //sets game start page and variables
         $("#start-card").show();
         $("#clock-card").hide();
         $("#question-card").hide();
         $("#answer-card").hide();
         $("#correct-card").hide();
         $("#total-card").hide();
+        $("#restart-card").hide();
         correct = 0;
         incorrect = 0;
         timeOut = 0;
-
-
-    function timerClock() {
-
-    }
-    
-
-        time: 30,
-
-        function start() {
-
-            intervalId = setInterval(count, 1000);
-        }
-         
-        function stop() {
-
-            clearInterval(intervalId);
-
-        }
-        function count() {
-
-            time--;
-            var converted = timeConverter(time);
-            $("#clock").text(converted);
-        }
-
-        function timeConverter(t) {
-
-            var minutes = Math.floor(t / 60);
-            var seconds = t - (minutes * 60);
-        
-            if (seconds < 10) {
-              seconds = "0" + seconds;
-            }
-        
-            if (minutes === 0) {
-              minutes = "00";
-            }
-            else if (minutes < 10) {
-              minutes = "0" + minutes;
-            }
-        
-            return minutes + ":" + seconds;
-          }
-
-    // produces and shows first question and answer choices
-    function firstQuestion() {
-
         questionCount = 0;
-        $("#question").text(currentQuestion.question);
-        $("#btn-one").text(currentQuestion.answers[0]);
-        $("#btn-two").text(currentQuestion.answers[1]);
-        $("#btn-three").text(currentQuestion.answers[2]);
-        $("#btn-four").text(currentQuestion.answers[3]);
+        currentQuestion = questionArray[questionCount]; 
         
-    }
+        function timerClock() {
+            var answer = currentQuestion.correctAnswer;
+            $("#answer-card").hide();
+            $("#correct").text("TIMED-OUT");
+            $("#correct-answer").text("[ANSWER IS] " + answer);
+            $("#correct-card").css({"background":"red",      "border":"red"});
+            $("#correct-card").show();
+            timeOut ++;
+            questionCount ++;
+            setTimeout(nextQuestion, 2000); 
+        }
 
-    //answer selection, shows if answer is correct or not and increments  //them. also increments questionCount and delays nextQuestion function 
-    $(document).on("click", ".btn", function() {
+    // variable for 30 second counter
+    var intervalId;
+    var clockRunning = false;
+
+    var stopwatch = {
+            
+        time: 21,
+
+    reset: function() {
+
+        stopwatch.time = 21;
+        $("#clock").text("00:20");
+    },
+    start: function() {
+
+        if (!clockRunning) {
+        intervalId = setInterval(stopwatch.count, 1000);
+        clockRunning = true;
+        }
+    },   
+    stop: function() {
+
+        clearInterval(intervalId);
+        clockRunning = false;
+    },
+    count: function() {
+
+        stopwatch.time--;
+        var converted = stopwatch.timeConverter(stopwatch.time);
+        console.log(converted);
+        $("#clock").text(converted);
+        if (stopwatch.time === 0) {
+            console.log("stop");
+            stopwatch.stop();
+            timerClock();
+        }
+    },
+    timeConverter: function(t) {
+
+        var minutes = Math.floor(t / 60);
+        var seconds = t - (minutes * 60);
+    
+        if (seconds < 10) {
+          seconds = "0" + seconds;
+        }   
+        if (minutes === 0) {
+          minutes = "00";
+        }
+        else if (minutes < 10) {
+          minutes = "0" + minutes;
+        }   
+        return minutes + ":" + seconds;
+        }
+    };
+    
+    //answer selection, shows if answer is correct or not and increments them. 
+    //also increments questionCount and delays nextQuestion function 
+    $(document).on("click", ".btn-answer", function() {
         
         var guess = $(this).text();
         console.log(guess);
@@ -127,6 +139,7 @@ $(document).ready(function() {
         console.log(answer);
         
         if (guess === answer) {
+            stopwatch.stop();
             $("#answer-card").hide();
             $("#correct").text("CORRECT");
             $("#correct-answer").text(answer);
@@ -134,28 +147,30 @@ $(document).ready(function() {
             $("#correct-card").show();
             correct ++;
             questionCount ++;
-            setTimeout(nextQuestion, 3000);
+            setTimeout(nextQuestion, 2000);
         }
         else if (guess !== answer) {
+            stopwatch.stop();
             $("#answer-card").hide();
-            $("#correct").text("INCORRECT")
+            $("#correct").text("INCORRECT");
             $("#correct-answer").text("[ANSWER IS] " + answer);
             $("#correct-card").css({"background":"red", "border":"red"});
             $("#correct-card").show();
             incorrect ++;
             questionCount ++;
-            setTimeout(nextQuestion, 3000);
+            setTimeout(nextQuestion, 2000);
         }
-
+        
     });
-
-    //selects and shows following questions and answers after the first  
+    
+    //selects and shows following questions and answers after the first, resets and starts counter  
     function nextQuestion() {
-
+       
         if (questionCount === questionArray.length) {
             gameTotals();
         }
-        
+
+        stopwatch.reset();
         currentQuestion = questionArray[questionCount];
         $("#question").text(currentQuestion.question);
         $("#btn-one").text(currentQuestion.answers[0]);
@@ -164,23 +179,37 @@ $(document).ready(function() {
         $("#btn-four").text(currentQuestion.answers[3]);
         $("#correct-card").hide();
         $("#answer-card").show();
+        stopwatch.start();    
+    }
 
-       
+     // produces and shows first question and answer choices
+    function firstQuestion() {
+
+        stopwatch.reset();
+        questionCount = 0;
+        $("#question").text(currentQuestion.question);
+        $("#btn-one").text(currentQuestion.answers[0]);
+        $("#btn-two").text(currentQuestion.answers[1]);
+        $("#btn-three").text(currentQuestion.answers[2]);
+        $("#btn-four").text(currentQuestion.answers[3]);
+        stopwatch.start();
     }
 
     //start that begins game and gets first question
-    $(document).on("click", "#start", function(){
+    $(document).on("click", "#start", function() {
 
         $("#start-card").hide();
         $("#clock-card").show();
         $("#question-card").show();
         $("#answer-card").show();
         $("#correct-card").hide();
-        firstQuestion();     
+        firstQuestion(); 
+        
     });
 
     //ends game and shows the total of correct,incorrect and timed out
     function gameTotals() {
+        stopwatch.reset();
         $("#correct-total").text("CORRECT: " + correct);
         $("#incorrect-total").text("INCORRECT: " + incorrect);
         $("#time-out").text("TIMED-OUTS: " + timeOut);
@@ -188,13 +217,19 @@ $(document).ready(function() {
         $("#answer-card").hide();
         $("#correct-card").hide();
         $("#total-card").show();
+       // $("#restart-card").show();
     }
 
+     //$(document).on("click", "#restart", function() {
+
+        //$("#restart-card").hide();
+        //$("#clock-card").show();
+        //$("#question-card").show();
+        //$("#answer-card").show();
+        //$("#correct-card").hide();
+        //firstQuestion();       
+    //});
     
-
-
-   
-
 });
 
 

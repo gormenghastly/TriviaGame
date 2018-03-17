@@ -37,6 +37,18 @@ body {
     font-size: 36px;
     font-weight: bold;
 }
+#restart-card {
+    background: red;
+    border: 1px solid red;
+    border-radius: 35px;
+    margin-top: 50px;
+}
+#restart {
+    background: red;
+    border-radius: 35px;
+    font-size: 36px;
+    font-weight: bold;
+}
 #answer-card {
     background: green;
     border: 5px solid green;
