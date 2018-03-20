@@ -209,7 +209,7 @@ $(document).ready(function() {
 
     //ends game and shows the total of correct,incorrect and timed out
     function gameTotals() {
-        stopwatch.reset();
+        
         $("#correct-total").text("CORRECT: " + correct);
         $("#incorrect-total").text("INCORRECT: " + incorrect);
         $("#time-out").text("TIMED-OUTS: " + timeOut);
@@ -217,18 +217,26 @@ $(document).ready(function() {
         $("#answer-card").hide();
         $("#correct-card").hide();
         $("#total-card").show();
-       // $("#restart-card").show();
+        $("#restart-card").show();
     }
 
-     //$(document).on("click", "#restart", function() {
+    //game restart without going back to original start
+     $(document).on("click", "#restart", function() {
 
-        //$("#restart-card").hide();
-        //$("#clock-card").show();
-        //$("#question-card").show();
-        //$("#answer-card").show();
-        //$("#correct-card").hide();
-        //firstQuestion();       
-    //});
+        $("#start-card").hide();
+        $("#clock-card").show();
+        $("#question-card").show();
+        $("#answer-card").show();
+        $("#correct-card").hide();
+        $("#total-card").hide();
+        $("#restart-card").hide();
+        correct = 0;
+        incorrect = 0;
+        timeOut = 0;
+        questionCount = 0;
+        currentQuestion = questionArray[questionCount]; 
+        firstQuestion();
+    });
     
 });
 
