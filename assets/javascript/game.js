@@ -14,7 +14,7 @@ var questionArray = [{
 }, {
     question: "WHICH CHARACTER DOES NOT WEAR BLACK LIKE THE OTHERS?",
     answers: ["CYPHER", "SWITCH", "MORPHEUS", "TRINITY"],
-    correctAnswer: "SWITCH" 
+    correctAnswer: "SWITCH"
 }, {
     question: "WHAT IS THE NAME OF MORPHEUS'S SHIP?",
     answers: ["PROMETHEUS", "MAGELLAN", "ICARUS", "NEBUCHADNEZZAR"],
@@ -46,107 +46,107 @@ var incorrect = 0;
 var timeOut = 0;
 var questionCount = 0;
 var currentQuestion = questionArray[questionCount];
-       
-$(document).ready(function() {
+
+$(document).ready(function () {
     //sets game start page and variables
-        $("#start-card").show();
-        $("#clock-card").hide();
-        $("#question-card").hide();
+    $("#start-card").show();
+    $("#clock-card").hide();
+    $("#question-card").hide();
+    $("#answer-card").hide();
+    $("#correct-card").hide();
+    $("#total-card").hide();
+    $("#restart-card").hide();
+    correct = 0;
+    incorrect = 0;
+    timeOut = 0;
+    questionCount = 0;
+    currentQuestion = questionArray[questionCount];
+
+    function timerClock() {
+        var answer = currentQuestion.correctAnswer;
         $("#answer-card").hide();
-        $("#correct-card").hide();
-        $("#total-card").hide();
-        $("#restart-card").hide();
-        correct = 0;
-        incorrect = 0;
-        timeOut = 0;
-        questionCount = 0;
-        currentQuestion = questionArray[questionCount]; 
-        
-        function timerClock() {
-            var answer = currentQuestion.correctAnswer;
-            $("#answer-card").hide();
-            $("#correct").text("TIMED-OUT");
-            $("#correct-answer").text("[ANSWER IS] " + answer);
-            $("#correct-card").css({"background":"red",      "border":"red"});
-            $("#correct-card").show();
-            timeOut ++;
-            questionCount ++;
-            setTimeout(nextQuestion, 2000); 
-        }
+        $("#correct").text("SYSTEM FAILURE: TIMED-OUT");
+        $("#correct-answer").text("[ANSWER IS] " + answer);
+        $("#correct-card").css({ "background": "red", "border": "red" });
+        $("#correct-card").show();
+        timeOut++;
+        questionCount++;
+        setTimeout(nextQuestion, 2000);
+    }
 
     // variable for 30 second counter
     var intervalId;
     var clockRunning = false;
 
     var stopwatch = {
-            
+
         time: 21,
 
-    reset: function() {
+        reset: function () {
 
-        stopwatch.time = 21;
-        $("#clock").text("00:20");
-    },
-    start: function() {
+            stopwatch.time = 21;
+            $("#clock").text("00:20");
+        },
+        start: function () {
 
-        if (!clockRunning) {
-        intervalId = setInterval(stopwatch.count, 1000);
-        clockRunning = true;
-        }
-    },   
-    stop: function() {
+            if (!clockRunning) {
+                intervalId = setInterval(stopwatch.count, 1000);
+                clockRunning = true;
+            }
+        },
+        stop: function () {
 
-        clearInterval(intervalId);
-        clockRunning = false;
-    },
-    count: function() {
+            clearInterval(intervalId);
+            clockRunning = false;
+        },
+        count: function () {
 
-        stopwatch.time--;
-        var converted = stopwatch.timeConverter(stopwatch.time);
-        console.log(converted);
-        $("#clock").text(converted);
-        if (stopwatch.time === 0) {
-            console.log("stop");
-            stopwatch.stop();
-            timerClock();
-        }
-    },
-    timeConverter: function(t) {
+            stopwatch.time--;
+            var converted = stopwatch.timeConverter(stopwatch.time);
+            console.log(converted);
+            $("#clock").text(converted);
+            if (stopwatch.time === 0) {
+                console.log("stop");
+                stopwatch.stop();
+                timerClock();
+            }
+        },
+        timeConverter: function (t) {
 
-        var minutes = Math.floor(t / 60);
-        var seconds = t - (minutes * 60);
-    
-        if (seconds < 10) {
-          seconds = "0" + seconds;
-        }   
-        if (minutes === 0) {
-          minutes = "00";
-        }
-        else if (minutes < 10) {
-          minutes = "0" + minutes;
-        }   
-        return minutes + ":" + seconds;
+            var minutes = Math.floor(t / 60);
+            var seconds = t - (minutes * 60);
+
+            if (seconds < 10) {
+                seconds = "0" + seconds;
+            }
+            if (minutes === 0) {
+                minutes = "00";
+            }
+            else if (minutes < 10) {
+                minutes = "0" + minutes;
+            }
+            return minutes + ":" + seconds;
         }
     };
-    
+
     //answer selection, shows if answer is correct or not and increments them. 
     //also increments questionCount and delays nextQuestion function 
-    $(document).on("click", ".btn-answer", function() {
-        
+    $(document).on("click", ".btn-answer", function () {
+
         var guess = $(this).text();
         console.log(guess);
         var answer = currentQuestion.correctAnswer;
         console.log(answer);
-        
+
         if (guess === answer) {
             stopwatch.stop();
             $("#answer-card").hide();
             $("#correct").text("CORRECT");
             $("#correct-answer").text(answer);
-            $("#correct-card").css({"background":"green", "border":"green"});
+            $("#correct-card").css({ "background": "green", "border": "green" });
             $("#correct-card").show();
-            correct ++;
-            questionCount ++;
+            correct++;
+            questionCount++;
             setTimeout(nextQuestion, 2000);
         }
         else if (guess !== answer) {
@@ -154,18 +154,18 @@ $(document).ready(function() {
             $("#answer-card").hide();
             $("#correct").text("INCORRECT");
             $("#correct-answer").text("[ANSWER IS] " + answer);
-            $("#correct-card").css({"background":"red", "border":"red"});
+            $("#correct-card").css({ "background": "red", "border": "red" });
             $("#correct-card").show();
-            incorrect ++;
-            questionCount ++;
+            incorrect++;
+            questionCount++;
             setTimeout(nextQuestion, 2000);
         }
-        
+
     });
-    
+
     //selects and shows following questions and answers after the first, resets and starts counter  
     function nextQuestion() {
-       
+
         if (questionCount === questionArray.length) {
             gameTotals();
         }
@@ -179,10 +179,10 @@ $(document).ready(function() {
         $("#btn-four").text(currentQuestion.answers[3]);
         $("#correct-card").hide();
         $("#answer-card").show();
-        stopwatch.start();    
+        stopwatch.start();
     }
 
-     // produces and shows first question and answer choices
+    // produces and shows first question and answer choices
     function firstQuestion() {
 
         stopwatch.reset();
@@ -196,20 +196,20 @@ $(document).ready(function() {
     }
 
     //start that begins game and gets first question
-    $(document).on("click", "#start", function() {
+    $(document).on("click", "#start", function () {
 
         $("#start-card").hide();
         $("#clock-card").show();
         $("#question-card").show();
         $("#answer-card").show();
         $("#correct-card").hide();
-        firstQuestion(); 
-        
+        firstQuestion();
+
     });
 
     //ends game and shows the total of correct,incorrect and timed out
     function gameTotals() {
-        
+
         $("#correct-total").text("CORRECT: " + correct);
         $("#incorrect-total").text("INCORRECT: " + incorrect);
         $("#time-out").text("TIMED-OUTS: " + timeOut);
@@ -221,7 +221,7 @@ $(document).ready(function() {
     }
 
     //game restart without going back to original start
-     $(document).on("click", "#restart", function() {
+    $(document).on("click", "#restart", function () {
 
         $("#start-card").hide();
         $("#clock-card").show();
@@ -234,10 +234,10 @@ $(document).ready(function() {
         incorrect = 0;
         timeOut = 0;
         questionCount = 0;
-        currentQuestion = questionArray[questionCount]; 
+        currentQuestion = questionArray[questionCount];
         firstQuestion();
     });
-    
+
 });
 
 
